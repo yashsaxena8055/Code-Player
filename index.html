@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Code Player</title>
+
+    <style>
+        footer {
+    background-color: #1b1b1b;
+    padding: 5px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    z-index: 1;
+    width: 100%;
+}
+footer p {
+    color: white;
+    padding-top: 5px;
+    text-align: center;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+        body{
+            margin: 0px;
+            padding: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+      #navbar{
+          display: flex;
+          border: 1px solid gray;
+          background-color: #ededed;
+          height: 50px;
+         
+      }
+      #logo{
+          padding: 10px 10px;
+          font-weight: bold;
+      }
+      #buttonContainer{
+          display: flex;
+          margin: 5px 299px;
+          
+          border: 1px solid gray;
+          border-radius: 5px;
+          
+          
+      }
+.togglebutton{
+    padding: 10px;
+    border-right: 1px solid gray;
+   
+
+}
+.highlight{
+    background-color: gray;
+}
+.active{
+    background-color: #e8f2ff;
+}
+textarea{
+    width: 50%;
+  resize: none;
+  border-top: none;
+  border-color: gray;
+}
+.panel{
+    float: left;
+    
+}
+.hidden{
+    display: none;
+}
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div id="logo">CODE PLAYER</div>
+        <div id="buttonContainer">
+           <div class="togglebutton active"id="html" >HTML</div>
+           <div class="togglebutton"id="css">CSS</div>
+           <div class="togglebutton"id="javascript">JAVASCRIPT</div>
+           <div class="togglebutton active"id="output">OUTPUT</div>
+         
+
+        </div>
+    </nav>
+    <div id="container">
+
+        <textarea id="htmlPanel" class="panel"><p id="para">hello world</p></textarea>
+        <textarea id="cssPanel" class="panel hidden">p{color:blue;}</textarea>
+        <textarea id="javascriptPanel" class="panel hidden"> document.getElementById("para").innerHTML="Inner html is been changed.";</textarea>
+        <iframe src="" frameborder="0" id="outputPanel" class="panel">hello</iframe>
+    </div>
+  
+
+
+
+
+
+
+
+    <footer>
+        <p> &copy; Design And Developed By <a href="https://www.linkedin.com/in/yash-saxena-1453931b4">Yash Saxena</a>
+        </p>
+    </footer>
+    <script>
+
+        $(".togglebutton").hover(function()
+        {
+              $(this).addClass("highlight");
+             
+        },function()
+        {
+            $(this).removeClass("highlight");
+            
+        });
+        $(".togglebutton").click(function()
+        {
+                $(this).toggleClass("active");
+                $(this).removeClass("highlight");
+               var pannelId= $(this).attr("id")+"Panel";
+               $("#"+pannelId).toggleClass("hidden");
+               var numberOfActive=4- $(".hidden").length;
+               $(".panel").width(($(window).width()/numberOfActive)-15);
+        })
+        $(".panel").height($(window).height()-$("nav").height()-40);
+        $(".panel").width(($(window).width()/2)-15);
+       
+        function updatePage()
+            {
+                $("iframe").contents().find('html').html("<html><head><style type='text/css'>"+$("#cssPanel").val()+"</style></head><body>" + $("#htmlPanel").val()+"</body></html>");
+                document.getElementById("outputPanel").contentWindow.eval($("#javascriptPanel").val());
+                
+            }
+            updatePage();
+        $("#htmlPanel").on('change keyup paste', function() {
+           
+        
+          updatePage();
+});
+
+    </script>
+</body>
+</html>
